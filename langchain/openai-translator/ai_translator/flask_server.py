@@ -1,15 +1,16 @@
+from utils import ArgumentParser, LOG
+from translator import PDFTranslator, TranslationConfig
+from flask import Flask, request, send_file, jsonify
 import sys
 import os
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from flask import Flask, request, send_file, jsonify
-from translator import PDFTranslator, TranslationConfig
-from utils import ArgumentParser, LOG
 
 app = Flask(__name__)
 
 TEMP_FILE_DIR = "flask_temps/"
+
 
 @app.route('/translation', methods=['POST'])
 def translation():
@@ -23,7 +24,7 @@ def translation():
 
         if input_file and input_file.filename:
             # # 创建临时文件
-            input_file_path = TEMP_FILE_DIR+input_file.filename
+            input_file_path = TEMP_FILE_DIR + input_file.filename
             LOG.debug(f"[input_file_path]\n{input_file_path}")
 
             input_file.save(input_file_path)
@@ -33,7 +34,7 @@ def translation():
                 input_file=input_file_path,
                 source_language=source_language,
                 target_language=target_language)
-            
+
             # 移除临时文件
             # os.remove(input_file_path)
 
@@ -58,7 +59,7 @@ def initialize_translator():
 
     # 初始化配置单例
     config = TranslationConfig()
-    config.initialize(args)    
+    config.initialize(args)
     # 实例化 PDFTranslator 类，并调用 translate_pdf() 方法
     global Translator
     Translator = PDFTranslator(config.model_name)

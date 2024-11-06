@@ -1,10 +1,10 @@
+from translator import PDFTranslator, TranslationConfig
+from utils import ArgumentParser, LOG
 import sys
 import os
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from utils import ArgumentParser, LOG
-from translator import PDFTranslator, TranslationConfig
 
 if __name__ == "__main__":
     # 解析命令行
@@ -13,7 +13,7 @@ if __name__ == "__main__":
 
     # 初始化配置单例
     config = TranslationConfig()
-    config.initialize(args)    
+    config.initialize(args)
 
     # 实例化 PDFTranslator 类，并调用 translate_pdf() 方法
     translator = PDFTranslator(config.model_name)
