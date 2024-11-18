@@ -6,6 +6,7 @@ from langchain.memory import ConversationBufferMemory
 
 CHATGLM_URL = "http://127.0.0.1:8001"
 
+
 def init_chatbot():
     llm = ChatGLM(
         endpoint_url=CHATGLM_URL,
@@ -15,14 +16,16 @@ def init_chatbot():
         model_kwargs={"sample_model_args": False},
     )
     global CHATGLM_CHATBOT
-    CHATGLM_CHATBOT = ConversationChain(llm=llm, 
+    CHATGLM_CHATBOT = ConversationChain(llm=llm,
                                         verbose=True,
                                         memory=ConversationBufferMemory())
     return CHATGLM_CHATBOT
 
+
 def chatglm_chat(message, history):
-    ai_message = CHATGLM_CHATBOT.predict(input = message)
+    ai_message = CHATGLM_CHATBOT.predict(input=message)
     return ai_message
+
 
 def launch_gradio():
     demo = gr.ChatInterface(
@@ -32,6 +35,7 @@ def launch_gradio():
     )
 
     demo.launch(share=True, server_name="0.0.0.0")
+
 
 if __name__ == "__main__":
     # 初始化聊天机器人
